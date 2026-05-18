@@ -1,0 +1,30 @@
+{
+  "name": "passport-mrz-reader-min-sithu",
+  "version": "1.5.0",
+  "private": true,
+  "description": "Privacy-focused browser-based Passport/ID MRZ Reader developed by Min SiThu.",
+  "scripts": {
+    "start": "python3 -m http.server 5173",
+    "check": "node --check src/app.js && node --check src/mrz-parser.js",
+    "test": "node tests/mrz-parser.test.mjs"
+  },
+  "keywords": [
+    "mrz",
+    "passport",
+    "ocr",
+    "tesseract",
+    "browser",
+    "security"
+  ],
+  "license": "MIT",
+  "author": "Min SiThu",
+  "type": "module",
+  "homepage": "https://github.com/MinSiThu/passport-mrz-reader-min-sithu#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MinSiThu/passport-mrz-reader-min-sithu.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MinSiThu/passport-mrz-reader-min-sithu/issues"
+  }
+}
