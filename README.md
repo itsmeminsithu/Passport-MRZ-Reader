@@ -1,117 +1,89 @@
 # Passport MRZ Reader
 
-**Developer:** Min SiThu
+Browser-based Passport/ID MRZ reader by Min SiThu. Reads MRZ data from an
+image upload, camera capture, or manual input. All processing runs locally
+in the browser; there is no backend and no image upload.
 
-A privacy-focused, browser-based Passport/ID MRZ reader. It can read MRZ data from an image upload, camera capture, or manual MRZ input. Processing runs locally in the browser with no backend required.
+## What it does
 
-## Features
+- Image upload, camera scanning (with device selection and quality modes),
+  and manual MRZ input, including one-line input and pasted `MRZ:` /
+  `Line 1:` labels
+- MRZ crop and preprocessing via the Canvas API, OCR via Tesseract.js
+  (background warm-up, reusable worker, downscaled input for speed)
+- TD3 passport, TD2 travel document, and TD1 ID card parsing, with check
+  digit validation and context-aware OCR normalisation for dates and check
+  digits
+- Masked sensitive output; a clear-all action that also stops the camera
 
-- Upload passport or ID image
-- Camera scanning with camera device selector
-- Manual MRZ input
-- One-line MRZ input support
-- Support for pasted labels such as `MRZ:` and `Line 1:`
-- MRZ crop and preprocessing using the Canvas API
-- OCR reading with Tesseract.js
-- Background OCR warm-up and reusable OCR worker
-- Reduced image size before OCR for better speed
-- TD3 passport parsing
-- TD2 travel document parsing
-- TD1 ID card parsing
-- MRZ check digit validation
-- Context-aware OCR normalization for dates and check digits
-- Masked sensitive output
-- Clear-all privacy button that also stops the camera
-- Fast, Balanced, and Sharp camera quality modes
-- Optional torch/light button on supported phones
-- Parser tests with `npm test`
+## Tech stack
 
-## Tech Stack
+HTML, CSS, JavaScript (ES modules), Canvas API, getUserMedia, Tesseract.js.
+No build step and no dependencies to install for the app itself.
 
-- HTML
-- CSS
-- JavaScript
-- Canvas API
-- getUserMedia Camera API
-- Tesseract.js
-- Custom MRZ parser
-- Custom check digit validation
-
-## Project Structure
+## Project structure
 
 ```txt
-passport-mrz-reader-min-sithu/
-├── index.html
+Passport-MRZ-Reader/
+├── index.html          # Page shell; loads ./src/app.js
 ├── styles.css
-├── package.json
+├── src/
+│   ├── app.js          # UI, camera, OCR wiring
+│   └── mrz-parser.js   # MRZ parsing and check digits
+├── tests/
+│   └── mrz-parser.test.mjs
+├── package.json        # start / check / test scripts only
 ├── README.md
 ├── RUN_LOCAL.md
 ├── SECURITY.md
 ├── CODE_REVIEW.md
+├── GITHUB_SETUP.md
 ├── LICENSE
-├── src/
-│   ├── app.js
-│   └── mrz-parser.js
-└── tests/
-    └── mrz-parser.test.mjs
+└── .gitignore
 ```
 
-## Run Locally
+## Run locally
 
-Do not double-click `index.html`. Camera access and JavaScript modules work best through a local server.
+Do not open `index.html` directly — camera access and ES modules need a
+server, and camera needs `localhost` or HTTPS.
 
 ```bash
 python3 -m http.server 5173
+# open http://localhost:5173
 ```
 
-Then open:
-
-```txt
-http://localhost:5173
-```
-
-Camera scanning works on `localhost` or HTTPS.
-
-To stop the local server, return to Terminal and press:
-
-```txt
-Control + C
-```
+Stop with `Ctrl+C`.
 
 ## Test
 
-Run this inside the project folder:
-
 ```bash
-npm test
+npm test        # runs tests/mrz-parser.test.mjs with node
+npm run check   # node --check on src/app.js and src/mrz-parser.js
 ```
 
-Current checks:
+Covers: TD3 sample passport, check digits, manual input with labels,
+one-line manual passport MRZ, one-line TD1 ID card MRZ.
 
-```txt
-node --check src/app.js: passed
-node --check src/mrz-parser.js: passed
-npm test: passed
-```
+## Live preview (GitHub Pages — post-merge step, not yet live)
 
-## Privacy Notes
+Static site, no build step, no mock page added. After this PR is merged,
+enable Pages in Settings → Pages → Source: **Deploy from a branch**,
+Branch: **main**, Folder: **/(root)**. Expected URL once enabled:
+`https://itsmeminsithu.github.io/Passport-MRZ-Reader/`
 
-This project is designed to avoid backend processing. Images, camera frames, OCR text, and parsed MRZ output are processed locally in the browser. Sensitive fields are masked in the UI.
+Pages is NOT live until that setting is enabled after merge and the URL
+actually loads — this PR alone does not make it live. (Pages serves over
+HTTPS, which satisfies the camera requirement; the first OCR scan is slow
+while Tesseract.js resources load, then faster via the reused worker.)
 
-For production use, review the privacy and legal requirements for your target users before storing or transmitting any passport or ID data.
+## Privacy notes
 
-## Current Limitation
-
-The first OCR scan can still take time because Tesseract.js needs to load OCR resources in the browser. After the first scan, reading should be faster because the OCR worker is reused.
-
-## Recommended Next Upgrade
-
-For production, host Tesseract.js and language files locally instead of using a CDN. This can improve:
-
-- Loading speed
-- Security
-- Reliability
-- Offline/local deployment support
+Images, camera frames, OCR text, and parsed output are processed locally
+in the browser. Sensitive fields are masked in the UI. Before production
+use, review the privacy and legal requirements for the target users before
+storing or transmitting any passport or ID data. Tesseract.js is currently
+loaded from a CDN; hosting it locally would improve loading speed,
+security, reliability, and offline support.
 
 ## License
 

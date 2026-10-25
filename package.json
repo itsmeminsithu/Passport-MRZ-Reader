@@ -19,12 +19,12 @@
   "license": "MIT",
   "author": "Min SiThu",
   "type": "module",
-  "homepage": "https://github.com/MinSiThu/passport-mrz-reader-min-sithu#readme",
+  "homepage": "https://github.com/itsmeminsithu/Passport-MRZ-Reader#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MinSiThu/passport-mrz-reader-min-sithu.git"
+    "url": "https://github.com/itsmeminsithu/Passport-MRZ-Reader.git"
   },
   "bugs": {
-    "url": "https://github.com/MinSiThu/passport-mrz-reader-min-sithu/issues"
+    "url": "https://github.com/itsmeminsithu/Passport-MRZ-Reader/issues"
   }
 }
