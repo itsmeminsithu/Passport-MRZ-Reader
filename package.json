@@ -4,7 +4,9 @@
   "private": true,
   "description": "Privacy-focused browser-based Passport/ID MRZ Reader developed by Min SiThu.",
   "scripts": {
-    "start": "python3 -m http.server 5173"
+    "start": "python3 -m http.server 5173",
+    "check": "node --check src/app.js && node --check src/mrz-parser.js",
+    "test": "node tests/mrz-parser.test.mjs"
   },
   "keywords": [
     "mrz",
