@@ -24,7 +24,6 @@ A privacy-focused, browser-based Passport/ID MRZ reader. It can read MRZ data fr
 - Clear-all privacy button that also stops the camera
 - Fast, Balanced, and Sharp camera quality modes
 - Optional torch/light button on supported phones
-- Parser tests with `npm test`
 
 ## Tech Stack
 
@@ -40,7 +39,7 @@ A privacy-focused, browser-based Passport/ID MRZ reader. It can read MRZ data fr
 ## Project Structure
 
 ```txt
-passport-mrz-reader-min-sithu/
+Passport-MRZ-Reader/
 ├── index.html
 ├── styles.css
 ├── package.json
@@ -48,12 +47,9 @@ passport-mrz-reader-min-sithu/
 ├── RUN_LOCAL.md
 ├── SECURITY.md
 ├── CODE_REVIEW.md
+├── GITHUB_SETUP.md
 ├── LICENSE
-├── src/
-│   ├── app.js
-│   └── mrz-parser.js
-└── tests/
-    └── mrz-parser.test.mjs
+└── .gitignore
 ```
 
 ## Run Locally
@@ -78,21 +74,35 @@ To stop the local server, return to Terminal and press:
 Control + C
 ```
 
-## Test
+## Repository status — read before running
 
-Run this inside the project folder:
+`index.html` loads `./src/app.js`, but `src/` is not checked into this
+repository, and neither is `tests/`. That is why `package.json` no longer
+carries `check` or `test` scripts: they pointed at files that are not here,
+so they could never pass. The only copy of `src/app.js`,
+`src/mrz-parser.js`, and `tests/mrz-parser.test.mjs` inside this repository
+is inside `passport-mrz-reader-min-sithu-github-ready.zip`, which is why
+that zip was deliberately NOT deleted in this change. Restoring `src/` and
+`tests/` from the zip (or from another source) is a separate decision for
+the repository owner; until then, the page shell loads but MRZ scanning
+cannot work, and the old `npm test` claims in this README were removed
+rather than repeated. `CODE_REVIEW.md` still mentions `npm test` as a
+historical review note and was left untouched.
 
-```bash
-npm test
-```
+## Live preview (GitHub Pages — post-merge step, not yet live)
 
-Current checks:
+This is a static site with no build step, so the preview route is GitHub
+Pages straight from the repository, no mock page added:
 
-```txt
-node --check src/app.js: passed
-node --check src/mrz-parser.js: passed
-npm test: passed
-```
+- After this PR is merged, enable Pages in the repository Settings:
+  Pages → Build and deployment → Source: **Deploy from a branch**,
+  Branch: **main**, Folder: **/(root)**.
+- Expected URL once enabled: `https://itsmeminsithu.github.io/Passport-MRZ-Reader/`
+- Pages is NOT live until that setting is enabled after merge and the URL
+  actually loads — this PR alone does not make it live.
+- Even after Pages is enabled, MRZ scanning will not work until `src/` is
+  restored (see Repository status above), because `index.html` loads
+  `./src/app.js`.
 
 ## Privacy Notes
 
